@@ -1,0 +1,14 @@
+--
+-- Create a database using `MYSQL_DATABASE` placeholder
+--
+CREATE DATABASE IF NOT EXISTS `user_data`;
+USE `user_data`;
+
+-- Rest of queries
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE users (id INT, name VARCHAR(20), email VARCHAR(20),phone VARCHAR(20),created_at DATE,updated_at DATE);
+INSERT INTO users (id, name, email, phone, created_at,updated_at ) VALUES ('100','John','johan@xyz.com','9876543210','2020-04-02','2020-04-07');
+INSERT INTO users (id, name, email, phone, created_at,updated_at ) VALUES ('101','Matt','matt@xyz.com','8876543210','2020-04-01','2020-04-06');
+INSERT INTO users (id, name, email, phone, created_at,updated_at ) VALUES ('101','Jim','jim@xyz.com','7876543210','2020-03-31','2020-04-05');
+INSERT INTO users (id, name, email, phone, created_at,updated_at ) VALUES ('101','Sean','sean@xyz.com','6876543210','2020-03-30','2020-04-04');
+INSERT INTO users (id, name, email, phone, created_at,updated_at ) VALUES ('101','Shane','shane@xyz.com','5876543210','2020-03-28','2020-04-03');

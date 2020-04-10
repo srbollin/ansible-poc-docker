@@ -1,0 +1,12 @@
+---
+
+home_base: /home
+
+users: elk
+
+db_name: mysql_user_data
+
+
+# Variables listed here are applicable to "setup" role
+
+#ansible_python_interpreter: /usr/bin/python3

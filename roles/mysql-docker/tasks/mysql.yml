@@ -1,0 +1,22 @@
+---
+
+- name: "Create a Volume"
+  docker_volume:
+    name: "mysql_db_data"
+
+- name: "Launch database container"
+  docker_container:
+    name: "{{ db_name }}"
+    image: mysql:5.7
+    volumes:
+      - "mysql_db_data:/var/lib/mysql:rw"
+      - "/etc/mysql/dataload/dump.sql:/docker-entrypoint-initdb.d/dump.sql"
+    restart: true
+    env:
+      MYSQL_ROOT_PASSWORD: welcome123
+      MYSQL_DATABASE: user_data
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: welcome123
+    ports:
+      - "3306:3306"
+

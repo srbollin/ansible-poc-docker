@@ -1,0 +1,44 @@
+---
+
+# Playbook to deploy a Dockerized ELK stack
+
+- name: Deploy Elk Server
+  hosts: elk-server
+  become: yes
+  become_user: root
+  remote_user: srbollin
+  roles:
+    - users
+    - docker
+    - elk-docker
+  tags: 
+    - elk
+
+- name: Deploy Filebeat
+  hosts: elk-server
+  become: yes
+  become_user: root
+  remote_user: srbollin
+  roles:
+    - filebeat
+  tags:
+    - filebeat
+
+- name: Deploy MySQL Server
+  hosts: mysql-server
+  become: yes
+  become_user: root
+  remote_user: srbollin
+  roles:
+    - mysql-docker
+  tags:
+    - mysql
+
+- name: Deploy Redis Server
+  hosts: redis
+  roles:
+    - role: 'docker-redis'
+      become: true
+  tags:
+    - redis
+
