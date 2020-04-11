@@ -33,12 +33,9 @@ A prospector to send server logs has been configured:
 	  enabled: true
 	  paths:
 		- /var/log/*.log
-    - /var/log/ngnix/*.log
+    		- /var/log/ngnix/*.log
 		
 Which then sends all the existing and new logs to Logstash:
-
-	output.logstash:
-	 hosts: ["192.168.181.132:5044"]
 
 Execute Filebeat with the command: 
 
