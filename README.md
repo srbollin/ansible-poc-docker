@@ -1,5 +1,5 @@
 # ansible-poc-docker
-#Supports RHEL 7 (Disable SE Linux) and ansible 2.9.6
+#Tested with RHEL 7 (Disable SE Linux) and ansible 2.9.6
 
 #Run below command to deploy ELK stack
 #ansible-playbook -i hosts deploy_poc_stack.yml --tags "elk"
