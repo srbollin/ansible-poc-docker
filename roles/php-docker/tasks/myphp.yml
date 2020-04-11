@@ -1,0 +1,21 @@
+---
+
+- name: Copy Dockerfile
+  template: src=Dockerfile.j2 dest=/etc/myphpdocker/Dockerfile
+
+- name: Build Docker Image
+  shell:
+    cmd: "docker build -t myphpimg ."
+    creates: myphpimg
+    chdir: "/etc/myphpdocker"
+
+- name: "Launch PHP container"
+  docker_container:
+    name: "php_container"
+    image: myphpimg
+    volumes:
+      - "/etc/myphpdocker/src:/var/www/html"
+    restart: true
+    ports:
+      - "8080:80"
+

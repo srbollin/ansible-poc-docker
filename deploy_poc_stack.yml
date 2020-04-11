@@ -6,7 +6,7 @@
   hosts: elk-server
   become: yes
   become_user: root
-  remote_user: srbollin
+  remote_user: root
   roles:
     - users
     - docker
@@ -18,7 +18,7 @@
   hosts: elk-server
   become: yes
   become_user: root
-  remote_user: srbollin
+  remote_user: root
   roles:
     - filebeat
   tags:
@@ -28,17 +28,37 @@
   hosts: mysql-server
   become: yes
   become_user: root
-  remote_user: srbollin
+  remote_user: root
   roles:
     - mysql-docker
   tags:
     - mysql
 
 - name: Deploy Redis Server
-  hosts: redis
+  hosts: redis-server
+  become: yes
+  become_user: root
+  remote_user: root
   roles:
-    - role: 'docker-redis'
-      become: true
+    - docker-redis
   tags:
     - redis
+
+- name: Deploy PHP Server
+  hosts: php-server
+#  become: yes
+#  become_user: root
+  remote_user: root
+  roles:
+    - php-docker
+  tags:
+    - php
+
+- name: Deploy MySQL, PHP, Ngnix Containers
+  hosts: mysql-server
+  remote_user: root
+  roles:
+    - mysqlphpngnix-docker
+  tags:
+    - fullstack
 

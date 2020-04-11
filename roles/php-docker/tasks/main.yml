@@ -1,0 +1,5 @@
+---
+
+- include_tasks: copycode.yml
+
+- include_tasks: myphp.yml

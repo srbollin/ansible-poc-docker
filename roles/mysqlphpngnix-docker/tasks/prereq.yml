@@ -1,0 +1,114 @@
+---
+#- name: "Create a Volume"
+#  docker_volume:
+#    name: "mysql_db_data"
+
+- name: Create MySQL Data directory
+  file:
+    path: "/etc/docker/mysql/data"
+    state: directory
+    mode: 0777
+
+- name: Create MySQL Dataload directory
+  file:
+    path: "/etc/docker/mysql/dataload"
+    state: directory
+    mode: 0777
+
+- name: Copy MySQL dataload file
+  template:
+    src: "dump.sql.j2"
+    dest: "/etc/docker/mysql/dataload/dump.sql"
+    mode: 0766
+
+- name: Create PHP Docker directory
+  file:
+    path: "/etc/docker/myphp"
+    state: directory
+    mode: 0777
+
+- name: Create PHP Source Code directory
+  file:
+    path: "/etc/docker/myphp/src"
+    state: directory
+    mode: 0777
+
+
+- name: Copy PHP Source Code
+  template:
+    src: "users.php.j2"
+    dest: "/etc/docker/myphp/src/users.php"
+    mode: 0766
+
+- name: Copy PHP Source Code
+  template:
+    src: "connection.php.j2"
+    dest: "/etc/docker/myphp/src/connection.php"
+    mode: 0766
+
+- name: Copy Dockerfile
+  template:
+    src: "Dockerfile.j2"
+    dest: "/etc/docker/myphp/Dockerfile"
+    mode: 0766
+
+- name: Create PHP Source Code  directory
+  file:
+    path: "/etc/docker/myphp/src"
+    state: directory
+    mode: 0777
+
+- name: Build Docker Image
+  shell:
+    cmd: "docker build -t myphpimg ."
+    creates: myphpimg
+    chdir: "/etc/docker/myphp"
+
+#- name: Add mysql OS User
+#  shell:
+#    cmd: "groupadd --gid 1010 mysql;useradd --uid 1010 --gid 1010 -m --shell /bin/bash mysql;"
+#    creates: mysql
+
+#- name: Change Ownership of MySQL Data Directory
+#  shell:
+#    cmd: "chown -R mysql:mysql /etc/docker/mysql/data;"
+#    creates: myphpimg
+#    chdir: "/etc/docker/myphp"
+
+- name: Add group "mysql" to remote server
+  group:
+    name: mysql
+    gid: 1010
+    state: present 
+
+- name: Add user "mysql" to remote server
+  user:
+    name: mysql
+    uid: 1010
+    group: mysql
+    groups: mysql,sysadmins
+    append: yes
+    shell: /bin/bash
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+
+- name: Create NGNIX Config directory
+  file:
+    path: "/etc/docker/nginx"
+    state: directory
+    mode: 0777
+
+- name: Create NGNIX log directory
+  file:
+    path: "/var/log/nginx"
+    state: directory
+    mode: 0777	
+
+- name: Copy NGNIX Config File
+  template:
+    src: "nginx.conf.j2"
+    dest: "/etc/docker/nginx/nginx.conf"
+    mode: 0766
+

@@ -1,0 +1,38 @@
+---
+- name: Deploy MySQL, PHP and Ngnix in 3 Docker containers
+  docker_service:
+    project_name: "mysql_php_docker"
+    definition:
+      version: "2"
+      services:
+        mysql:
+          image: "mysql:5.7"
+          ports:
+            - "3306:3306"
+          volumes:
+            - "/etc/docker/mysql/data:/var/lib/mysql:Z"
+            - "/etc/docker/mysql/dataload/dump.sql:/docker-entrypoint-initdb.d/dump.sql"
+          environment:
+            MYSQL_ROOT_PASSWORD: welcome123
+            MYSQL_DATABASE: user_data
+            MYSQL_USER: phpuser
+            MYSQL_PASSWORD: welcome123
+        myphp:
+          image: "myphpimg"
+          ports:
+            - "8080:80"
+          volumes:
+            - "/etc/myphpdocker/src:/var/www/html"
+        nginx:
+          image: "nginx"
+          ports:
+            - "80:80"
+          expose:
+            - 80
+          volumes:
+            - "/etc/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+            - "/var/log/nginx/:/var/log/nginx/:Z"
+        cache:
+          image: "redis"
+          ports:
+            - "6379:6379"

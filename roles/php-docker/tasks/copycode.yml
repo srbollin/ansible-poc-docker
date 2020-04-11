@@ -1,0 +1,33 @@
+---
+
+- name: Create PHP Docker directory
+  file:
+    path: "/etc/myphpdocker"
+    state: directory
+    mode: 0777
+
+- name: Create PHP Source Code  directory
+  file:
+    path: "/etc/myphpdocker/src"
+    state: directory
+    mode: 0777
+
+
+- name: Copy PHP Source Code
+  template:
+    src: "users.php.j2"
+    dest: "/etc/myphpdocker/src/users.php"
+    mode: 0766
+
+- name: Copy PHP Source Code
+  template:
+    src: "connection.php.j2"
+    dest: "/etc/myphpdocker/src/connection.php"
+    mode: 0766
+
+- name: Copy Dockerfile
+  template:
+    src: "Dockerfile.j2"
+    dest: "/etc/myphpdocker/Dockerfile"
+    mode: 0766
+
