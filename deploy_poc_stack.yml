@@ -3,7 +3,7 @@
 # Playbook to deploy a Dockerized ELK stack
 
 - name: Deploy Elk Server
-  hosts: elk-server
+  hosts: servers
   become: yes
   become_user: root
   remote_user: root
@@ -55,7 +55,7 @@
     - php
 
 - name: Deploy MySQL, PHP, Ngnix Containers
-  hosts: mysql-server
+  hosts: servers
   remote_user: root
   roles:
     - mysqlphpngnix-docker
