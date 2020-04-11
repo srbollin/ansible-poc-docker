@@ -23,9 +23,9 @@ ansible-playbook -i hosts -t filebeat deploy_elk_stack.yml
 
 ### Filebeat
 
-Filebeat is not install in a Docker container to add flexibility for making changes in its configuration.
+Filebeat is not installed in a Docker container to add flexibility for making changes in its configuration.
 
-Filebeat configuration is in /etc/filebeat/filebeat.yml once is installed in the server.
+Filebeat configuration is in /etc/filebeat/filebeat.yml. once is installed in the server add the ngnix logs path as shown below.
 
 A prospector to send server logs has been configured:
 
